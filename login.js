@@ -20,7 +20,7 @@ authForm.addEventListener('submit', function(e) {
     // Dummy login check
     if(email === 'user@example.com' && password === 'password123') {
         // Redirect to websiteorig index.html
-       window.location.href = '../websiteorig/index.html';
+       window.location.href = 'websiteorig/index.html';
 
 
 
