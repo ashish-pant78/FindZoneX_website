@@ -347,3 +347,222 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+function toggleChat(){
+  const box=document.getElementById("chatbotBox");
+  box.style.display = box.style.display==="flex" ? "none" : "flex";
+}
+
+
+// MESSAGE BUBBLE STYLE
+function addMessage(text,sender){
+  const chat=document.getElementById("chatMessages");
+  const msg=document.createElement("div");
+
+  msg.className = sender==="You" ? "user-msg" : "ai-msg";
+  msg.textContent=text;
+
+  chat.appendChild(msg);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+
+// TYPING EFFECT
+function typingEffect(){
+ const chat=document.getElementById("chatMessages");
+ const typing=document.createElement("div");
+ typing.className="ai-msg";
+ typing.innerText="Typing...";
+ typing.id="typing";
+ chat.appendChild(typing);
+ chat.scrollTop=chat.scrollHeight;
+}
+
+function removeTyping(){
+ const t=document.getElementById("typing");
+ if(t) t.remove();
+}
+
+
+// SEND MESSAGE
+function sendMessage(){
+
+  const input=document.getElementById("chatInput");
+  const text=input.value.trim().toLowerCase();
+  if(!text) return;
+
+  addMessage(input.value,"You");
+  input.value="";
+
+  typingEffect();
+
+  setTimeout(()=>{
+    removeTyping();
+
+    let reply="Help likho agar samajh nahi aaya 🙂";
+
+    if(text.includes("hi") || text.includes("hello") || text.includes("hey"))
+    reply="Hello 👋 Welcome to FindZoneX! Main aapki help karne ke liye hu.";
+
+  else if(text.includes("how are you"))
+    reply="Main bilkul theek hu 🙂 Aapka lost ya found item me help kar sakta hu.";
+
+  else if(text.includes("your name"))
+    reply="Main FindZoneX AI assistant hu.";
+
+  else if(text.includes("what can you do"))
+    reply="Main lost report, found report, search, contact aur guide me help karta hu.";
+
+  // ===== HELP =====
+  else if(text.includes("help"))
+    reply="Main help kar sakta hu:\n• Lost item report\n• Found item report\n• Search\n• Contact support\n• Platform guide";
+
+  else if(text.includes("guide"))
+    reply="Item report karo, description add karo, location add karo. System match karega.";
+
+  // ===== ABOUT =====
+  else if(text.includes("about"))
+    reply="FindZoneX ek AI powered lost & found platform hai jo items match karta hai.";
+
+  else if(text.includes("who made"))
+    reply="FindZoneX Ashish Pant ka project hai 😎";
+
+  else if(text.includes("purpose"))
+    reply="Lost aur found items ko connect karna.";
+
+  // ===== LOST =====
+  else if(text.includes("lost"))
+    reply="Lost item report karne ke liye ❌ button click karo.";
+
+  else if(text.includes("mera saman kho gaya"))
+    reply="Lost item report form fill karo.";
+
+  else if(text.includes("report lost"))
+    reply="Red ❌ button use karo.";
+
+  else if(text.includes("kab milega"))
+    reply="Match milte hi notification milega.";
+
+  else if(text.includes("recover item"))
+    reply="System match hone par contact share karega.";
+
+  // ===== FOUND =====
+  else if(text.includes("found"))
+    reply="Found item report karne ke liye ✅ button click karo.";
+
+  else if(text.includes("mila hai"))
+    reply="Found report submit karo.";
+
+  else if(text.includes("return item"))
+    reply="Owner se contact karke return kar sakte ho.";
+
+  // ===== SEARCH =====
+  else if(text.includes("search"))
+    reply="Search bar me item describe karo.";
+
+  else if(text.includes("ai search"))
+    reply="AI description aur category match karta hai.";
+
+  else if(text.includes("filter"))
+    reply="Category, date aur location se filter kar sakte ho.";
+
+  else if(text.includes("sort"))
+    reply="Recent, match ya location se sort kar sakte ho.";
+
+  // ===== MATCH =====
+  else if(text.includes("match"))
+    reply="AI similarity check karta hai.";
+
+  else if(text.includes("how match"))
+    reply="Description + category + location compare hota hai.";
+
+  else if(text.includes("match score"))
+    reply="Similarity percentage show hota hai.";
+
+  // ===== IMAGE =====
+  else if(text.includes("image") || text.includes("photo"))
+    reply="Report form me image upload kar sakte ho.";
+
+  else if(text.includes("upload"))
+    reply="Upload option form me hai.";
+
+  // ===== LOCATION =====
+  else if(text.includes("location"))
+    reply="Nearby items search kar sakte ho.";
+
+  else if(text.includes("map"))
+    reply="Map feature upcoming version me.";
+
+  // ===== CONTACT =====
+  else if(text.includes("contact"))
+    reply="Email: support@findzonex.com";
+
+  else if(text.includes("phone"))
+    reply="Phone: +91 9876543210";
+
+  else if(text.includes("support"))
+    reply="Support team help karegi.";
+
+  // ===== ACCOUNT =====
+  else if(text.includes("login"))
+    reply="Login feature coming soon.";
+
+  else if(text.includes("signup"))
+    reply="Signup upcoming version me.";
+
+  else if(text.includes("account"))
+    reply="Account system development me hai.";
+
+  // ===== SAFETY =====
+  else if(text.includes("secure"))
+    reply="Platform secure hai.";
+
+  else if(text.includes("safe"))
+    reply="Reports verify kiye jate hain.";
+
+  else if(text.includes("fake"))
+    reply="Fake reports block kiye jate hain.";
+
+  // ===== REWARD =====
+  else if(text.includes("reward"))
+    reply="Reward optional hai.";
+
+  else if(text.includes("money"))
+    reply="Reward optional hai.";
+
+  // ===== CATEGORY =====
+  else if(text.includes("category"))
+    reply="Electronics, keys, wallet etc.";
+
+  else if(text.includes("pet"))
+    reply="Pets bhi report kar sakte ho.";
+
+  else if(text.includes("documents"))
+    reply="Documents category available hai.";
+
+  // ===== NOTIFICATION =====
+  else if(text.includes("notification"))
+    reply="Match hone par notification milega.";
+
+  else if(text.includes("alert"))
+    reply="Realtime alerts milte hain.";
+
+  // ===== TECH =====
+  else if(text.includes("ai"))
+    reply="AI matching algorithm use hota hai.";
+
+  else if(text.includes("algorithm"))
+    reply="Similarity detection system use hota hai.";
+
+  // ===== THANKS =====
+  else if(text.includes("thank"))
+    reply="Welcome 🙂";
+
+  else if(text.includes("bye"))
+    reply="Bye 👋 Good luck!";
+
+
+    addMessage(reply,"AI");
+
+  },800);
+}
+
