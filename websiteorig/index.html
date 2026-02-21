@@ -220,6 +220,23 @@
             <p><strong>Email:</strong> support@findzonex.com</p>
             <p><strong>Phone:</strong> +91 98765 43210</p>
         </div>
+    <!-- ================= AI CHATBOT ================= -->
+     
+<div class="chatbot-toggle" onclick="toggleChat()">💬</div>
+
+<div class="chatbot-box" id="chatbotBox">
+  <div class="chatbot-header">
+    FindZoneX AI Assistant
+    <span onclick="toggleChat()" style="cursor:pointer">✖</span>
+  </div>
+
+  <div class="chatbot-messages" id="chatMessages"></div>
+
+  <div class="chatbot-input">
+    <input type="text" id="chatInput" placeholder="Ask something..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
 
     </section>
 
