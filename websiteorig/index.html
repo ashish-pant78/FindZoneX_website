@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinddZoneX</title>
+  <link rel="stylesheet" href="styles.css" />
+
+</head>
+<body>
+   
+  <header>
+      <div class="log">
+    <img src="logoo.jpeg" alt="photo" class="origlogo">
+    </div>
+    <h1 class="find">FindZoneX</h1>
+    <nav class="navbar">
+      <a href="#">Home</a> 
+      <a href="#">About</a> 
+      <a href="#">features</a> 
+      <a href="#">Contact</a> 
+    </nav>
+  </header>
+  
+
+ <div class="container">
+        <div class="hero">
+            <h1>AI-Powered Lost & Found</h1>
+            <p>Advanced matching algorithm • Real-time notifications • Smart categorization</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalItems">0</div>
+                    <div class="stat-label">Total Items</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="matchedItems">0</div>
+                    <div class="stat-label">Matched</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="activeReports">0</div>
+                    <div class="stat-label">Active Reports</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-group ai-search">
+                <label>🤖 AI-Powered Search</label>
+                <input type="text" id="searchInput" placeholder="Describe what you're looking for..." oninput="smartSearch()">
+                <div class="ai-badge">AI</div>
+            </div>
+            
+            <div class="filter-group">
+                <label>Category</label>
+                <select id="categoryFilter" onchange="applyFilters()">
+                    <option value="">All Categories</option>
+                    <option value="Electronics">📱 Electronics</option>
+                    <option value="Clothing">👕 Clothing</option>
+                    <option value="Accessories">👜 Accessories</option>
+                    <option value="Documents">📄 Documents</option>
+                    <option value="Keys">🔑 Keys</option>
+                    <option value="Wallet/Purse">💳 Wallet/Purse</option>
+                    <option value="Jewelry">💎 Jewelry</option>
+                    <option value="Pet">🐕 Pet</option>
+                    <option value="Other">📦 Other</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label>Type</label>
+                <select id="typeFilter" onchange="applyFilters()">
+                    <option value="">All Types</option>
+                    <option value="lost">Lost Items</option>
+                    <option value="found">Found Items</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label>Location</label>
+                <input type="text" id="locationFilter" placeholder="Filter by location" oninput="applyFilters()">
+            </div>
+            
+            <div class="filter-group">
+                <label>Date Range</label>
+                <input type="date" id="dateFilter" onchange="applyFilters()">
+            </div>
+            
+            <div class="filter-group">
+                <label>Sort By</label>
+                <select id="sortFilter" onchange="applyFilters()">
+                    <option value="recent">Most Recent</option>
+                    <option value="match">Best Match</option>
+                    <option value="location">Nearest</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="aiSuggestions"></div>
+
+        <div class="items-container" id="itemsContainer"></div>
+    </div>
+
+    <!-- Report Modal -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Report Item</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            
+            <form id="reportForm" onsubmit="submitReport(event)">
+                <div class="form-group">
+                    <label>Item Name *</label>
+                    <input type="text" id="itemName" required placeholder="e.g., iPhone 14 Pro">
+                </div>
+                
+                <div class="form-group">
+                    <label>Category *</label>
+                    <select id="itemCategory" required>
+                        <option value="">Select category</option>
+                        <option value="Electronics">📱 Electronics</option>
+                        <option value="Clothing">👕 Clothing</option>
+                        <option value="Accessories">👜 Accessories</option>
+                        <option value="Documents">📄 Documents</option>
+                        <option value="Keys">🔑 Keys</option>
+                        <option value="Wallet/Purse">💳 Wallet/Purse</option>
+                        <option value="Jewelry">💎 Jewelry</option>
+                        <option value="Pet">🐕 Pet</option>
+                        <option value="Other">📦 Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Detailed Description *</label>
+                    <textarea id="itemDescription" required placeholder="Provide detailed description including color, brand, unique features..."></textarea>
+                </div>
+                
+                
+                <div class="form-group">
+                    <label>Location *</label>
+                    <input type="text" id="itemLocation" required placeholder="e.g., Coffee Shop, Main Street">
+                </div>
+                
+                <div class="form-group">
+                    <label>Date *</label>
+                    <input type="date" id="itemDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Upload Image (Optional)</label>
+                    <div class="image-upload" onclick="document.getElementById('imageInput').click()">
+                        <div>📷 Click to upload image</div>
+                        <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                    </div>
+                    <div id="imagePreview"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Contact Information *</label>
+                    <input type="text" id="itemContact" required placeholder="Email or Phone">
+                </div>
+                
+                <div class="form-group">
+                    <label>Reward (Optional)</label>
+                    <input type="text" id="itemReward" placeholder="e.g., $50 reward">
+                </div>
+                
+                <input type="hidden" id="reportType">
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    Submit Report
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-action">
+        <div class="fab" onclick="openReportModal('lost')" title="Report Lost Item">
+            ❌
+        </div>
+        <div class="fab" onclick="openReportModal('found')" title="Report Found Item">
+            ✅
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <span id="notificationText"></span>
+    </div>
+    <div class="about-container">
+    <h1>About FindZoneX</h1>
+    <p>
+      FindZoneX is an AI-powered lost & found platform designed to connect people
+      who lose items with those who find them. Our advanced matching algorithm
+      scans item descriptions, categories, images, and locations to instantly
+      suggest the best match results.
+    </p>
+
+    <p>
+      Whether you lost something valuable or found an item that belongs to
+      someone else, FindZoneX makes the recovery process fast, smart, and reliable.
+    </p>
+
+    <div class="feature-box">🔍 AI Matching Technology</div>
+    <div class="feature-box">⚡ Real-Time Notifications</div>
+    <div class="feature-box">📍 Location-Based Sorting</div>
+    <div class="feature-box">🛡️ Secure & Verified Reports</div>
+  </div>
+  <section class="contact-section">
+        <h2>Contact Us</h2>
+
+        <div class="contact-info">
+            <p><strong>Contact Name:</strong> FindZoneX Support Team</p>
+            <p><strong>Email:</strong> support@findzonex.com</p>
+            <p><strong>Phone:</strong> +91 98765 43210</p>
+        </div>
+
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
